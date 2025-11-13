@@ -1,111 +1,106 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: 0.0.0 → 1.0.0
-Modified Principles: N/A (Initial constitution)
-Added Sections:
-  - I. Code Quality Standards
-  - II. Testing Standards (NON-NEGOTIABLE)
-  - III. User Experience Consistency
-  - IV. Performance Requirements
-  - Development Workflow
-  - Quality Gates
-Templates Status:
-  ✅ plan-template.md - Reviewed, Constitution Check section aligns
-  ✅ spec-template.md - Reviewed, Success Criteria aligns with performance/UX principles
-  ✅ tasks-template.md - Reviewed, phase structure supports test-first workflow
-Follow-up TODOs: None
+Version Change: 1.0.0 → 1.0.1
+Modified Principles: 無（內容語言從英語翻譯為繁體中文，未改變原則結構或新增/移除項目）
+Added Sections: 無
+Removed Sections: 無
+Templates requiring updates:
+  ✅ .specify/templates/plan-template.md - 檢閱完成，Constitution Check 已對齊
+  ✅ .specify/templates/spec-template.md - 檢閱完成，Success Criteria 與性能/UX 原則一致
+  ✅ .specify/templates/tasks-template.md - 檢閱完成，階段結構支持測試優先流程
+Follow-up TODOs: 無
 -->
 
-# COM_PAR Constitution
+# COM_PAR 憲章
 
-## Core Principles
+## 核心原則
 
-### I. Code Quality Standards
+### I. 代碼品質標準
 
-**Code MUST be maintainable, readable, and follow established best practices.**
+**代碼必須可維護、可讀，並遵循已建立之最佳實務。**
 
-- **Consistency**: Code style MUST be consistent across the entire codebase using automated formatters and linters
-- **Documentation**: All public APIs, complex logic, and non-obvious implementations MUST include clear documentation
-- **Modularity**: Code MUST be organized into logical, loosely-coupled modules with clear responsibilities
-- **Clean Code**: Follow SOLID principles; avoid code smells such as deep nesting, long functions, or duplicated logic
-- **Code Review**: All code changes MUST pass peer review before merging; reviewers verify adherence to quality standards
+- **一致性**：整個程式庫必須使用自動化格式化工具與 linter 保持程式風格一致。
+- **文件化**：所有公開 API、複雜邏輯與非直觀實作必須有清楚文件說明。
+- **模組化**：程式碼必須以職責分明、低耦合之模組組織。
+- **潔淨程式碼**：遵循 SOLID 原則；避免深度巢狀、過長函式或重複邏輯等壞味道。
+- **程式碼審查**：所有變更必須通過同儕審查後才能合併；審查者需驗證符合品質標準。
 
-**Rationale**: High-quality code reduces technical debt, facilitates onboarding, and minimizes defects. Consistency and clarity enable the team to move faster over time.
+**理由**：高品質程式碼可降低技術負債、加速新成員上手並減少缺陷，提升團隊長期速度。
 
-### II. Testing Standards (NON-NEGOTIABLE)
+### II. 測試標準（不可協商）
 
-**Test-Driven Development (TDD) is mandatory. Tests are written first, approved, must fail, then implementation proceeds.**
+**強制採用測試驅動開發（TDD）：先寫測試、確認失敗、再實作以通過測試。**
 
-- **Red-Green-Refactor**: Strictly enforce the TDD cycle—write failing test → implement minimum code to pass → refactor
-- **Test Coverage**: Minimum 80% code coverage for unit tests; critical paths MUST have 100% coverage
-- **Test Types Required**:
-  - **Unit Tests**: Test individual functions/methods in isolation
-  - **Integration Tests**: Test interactions between components, services, or external dependencies
-  - **Contract Tests**: Verify API contracts and data schemas remain stable
-- **Test Quality**: Tests MUST be deterministic, fast, isolated, and clearly document expected behavior
-- **Continuous Testing**: All tests MUST pass in CI before merging; broken tests block deployments
+- **紅—綠—重構（Red-Green-Refactor）**：嚴格執行 TDD 循環。
+- **測試覆蓋率**：單元測試最低 80% 覆蓋率；關鍵路徑必須達到 100% 覆蓋。
+- **必需測試類型**：
+  - **單元測試**：隔離測試個別函式/方法。
+  - **整合測試**：測試元件或服務間之互動。
+  - **契約測試**：驗證 API 契約與資料結構之穩定性。
+- **測試品質**：測試必須為確定性、快速、隔離並清楚描述預期行為。
+- **持續測試**：所有測試在 CI 中必須通過方可合併；失敗測試會阻擋部署。
 
-**Rationale**: TDD ensures correctness from the start, serves as living documentation, and prevents regressions. Non-negotiable status reflects that quality cannot be compromised.
+**理由**：TDD 可從一開始確保正確性，並作為活文件以防止回歸；因此為不可妥協之要求。
 
-### III. User Experience Consistency
+### III. 使用者體驗一致性
 
-**User-facing interfaces MUST provide consistent, intuitive, and accessible experiences.**
+**所有面向使用者之介面必須提供一致、直覺且可存取的體驗。**
 
-- **Design System**: Establish and enforce a design system with reusable components, patterns, and guidelines
-- **Consistency**: UI elements, terminology, workflows, and interaction patterns MUST be consistent across all features
-- **Accessibility**: MUST comply with WCAG 2.1 Level AA standards; keyboard navigation, screen readers, and color contrast required
-- **Error Handling**: User-facing errors MUST be clear, actionable, and guide users toward resolution
-- **Feedback**: User actions MUST provide immediate visual/auditory feedback; loading states and progress indicators required
-- **Documentation**: User documentation and help content MUST be clear, current, and easily discoverable
+- **設計系統**：建立並強制使用可重用元件、樣式與互動模式。
+- **一致性**：UI 元件、術語、流程與互動模式在各功能間必須一致。
+- **可存取性**：必須遵守 WCAG 2.1 AA 標準；支援鍵盤操作、螢幕閱讀器及色彩對比。
+- **錯誤處理**：使用者可見錯誤必須清晰、可行並引導使用者解決問題。
+- **回饋**：使用者操作必須立即提供視覺或聽覺回饋；需有載入狀態與進度指示。
+- **使用者文件**：使用者文件與說明必須清楚、即時且容易被找到。
 
-**Rationale**: Consistent UX reduces learning curve, increases user satisfaction, and builds trust. Accessibility ensures inclusivity and often improves overall usability.
+**理由**：一致且可存取之 UX 可降低學習曲線、提升滿意度並建立信任。
 
-### IV. Performance Requirements
+### IV. 性能要求
 
-**System MUST meet defined performance benchmarks and remain responsive under expected load.**
+**系統必須符合定義之性能目標，並在預期負載下維持回應性。**
 
-- **Response Times**: API endpoints MUST respond within 200ms (p95); UI interactions MUST complete within 100ms
-- **Throughput**: System MUST handle expected peak load (defined per project) without degradation
-- **Resource Efficiency**: Memory usage MUST stay within defined limits; avoid memory leaks and excessive allocations
-- **Optimization**: Performance bottlenecks MUST be identified via profiling and addressed before production deployment
-- **Monitoring**: Performance metrics MUST be continuously monitored; alerts trigger when thresholds are exceeded
-- **Load Testing**: All features MUST undergo load testing to validate performance under realistic conditions
+- **回應時間**：API 端點 p95 回應時間必須 <= 200ms；UI 互動響應時間必須 <= 100ms。
+- **吞吐量**：系統必須能在定義之峰值負載下運作而不降級。
+- **資源效率**：記憶體使用必須在定義限制內；避免記憶體洩漏與過度配置。
+- **優化流程**：需透過分析與 profiler 偵測瓶頸，並在上線前改善。
+- **監控**：持續蒐集性能指標；當門檻被觸發時發出警示。
+- **負載測試**：所有主要功能在上線前需通過負載測試驗證。
 
-**Rationale**: Poor performance directly impacts user satisfaction and business outcomes. Proactive performance engineering prevents costly production issues.
+**理由**：性能不良直接影響使用者與商業指標，主動的性能工程可避免昂貴之生產問題。
 
-## Development Workflow
+## 開發流程
 
-**All development work follows a structured, repeatable process that enforces quality at each stage.**
+**所有開發工作遵循結構化且可重複之流程，在每個階段強制執行品質門檻。**
 
-- **Feature Specification**: All features begin with a written specification (spec.md) defining user stories, requirements, and success criteria
-- **Implementation Planning**: Each feature requires an implementation plan (plan.md) with technical context, architecture decisions, and complexity justifications
-- **Task Breakdown**: Features are decomposed into granular, independently testable tasks (tasks.md) organized by user story priority
-- **Test-First Execution**: For each task, tests are written first, reviewed, confirmed to fail, then implementation proceeds
-- **Code Review**: All changes undergo peer review verifying code quality, test coverage, UX consistency, and performance considerations
-- **Documentation Updates**: Changes that affect user-facing behavior or developer workflows MUST include documentation updates
+- **功能規格**：所有功能必須以書面規格（`spec.md`）開始，定義使用者故事、需求與成功標準。
+- **實作計畫**：每個功能需具備實作計畫（`plan.md`），包含技術背景、架構決策與複雜度說明。
+- **任務拆解**：功能需被拆解為可獨立測試之小任務（`tasks.md`），並依使用者故事優先度組織。
+- **測試優先執行**：每項任務先寫測試、經審查並確認失敗後再實作。
+- **程式碼審查**：所有變更需經同儕審查，驗證程式碼品質、測試覆蓋、UX 一致性與性能考量。
+- **文件同步**：若變更影響使用者或開發者流程，必須同步更新文件。
 
-## Quality Gates
+## 品質門檻
 
-**Each stage of development has mandatory quality gates that MUST pass before proceeding.**
+**每個開發階段皆有嚴格之品質門檻，必須通過後方可進入下一階段。**
 
-- **Specification Gate**: Spec MUST be approved by stakeholders before planning begins
-- **Planning Gate**: Plan MUST pass Constitution Check (verified against all principles) before implementation starts
-- **Implementation Gate**: Each task MUST have passing tests and code review approval before merging
-- **Integration Gate**: Feature branch MUST pass all CI tests (unit, integration, contract) and performance benchmarks
-- **Deployment Gate**: Production deployments require approval confirmation that all quality gates passed
+- **規格門檻**：規格須獲利害關係人核可後始得進入規劃。
+- **規劃門檻**：計畫須通過憲章對照檢查（Constitution Check）方可開始實作。
+- **實作門檻**：任務必須具備通過之測試與程式碼審查核准方可合併。
+- **整合門檻**：功能分支必須在 CI 上通過所有測試（單元、整合、契約）及性能基準。
+- **部署門檻**：生產部署需確認所有品質門檻已通過。
 
-**Gate Violations**: Any principle violation MUST be explicitly justified in the Complexity Tracking section of the plan with rationale and documentation of why simpler alternatives were rejected.
+**門檻違規**：任何原則違規必須在計畫之複雜度追蹤（Complexity Tracking）中說明理由，並紀錄為何更簡單之替代方案被拒。
 
-## Governance
+## 治理
 
-**This constitution supersedes all other development practices and processes.**
+**本憲章優於其他開發慣例與流程。**
 
-- **Amendment Process**: Proposed amendments MUST include rationale, impact analysis, and migration plan; require team consensus
-- **Version Control**: Constitution follows semantic versioning (MAJOR.MINOR.PATCH); breaking changes require MAJOR bump
-- **Compliance Verification**: All pull requests and code reviews MUST verify compliance with constitutional principles
-- **Guidance Integration**: Runtime development guidance (AGENT.md, command prompts) MUST align with constitutional principles
-- **Continuous Improvement**: Constitution is reviewed quarterly; lessons learned inform amendments
-- **Complexity Justification**: Any deviation from principles or added complexity MUST be documented and justified
+- **修訂程序**：任何修訂提案須包含理由、影響分析與遷移計畫，並需團隊共識。
+- **版本控管**：憲章採用語意版本（MAJOR.MINOR.PATCH）；重大破壞性變更需 MAJOR 提升。
+- **合規驗證**：所有 Pull Request 與程式碼審查需驗證是否符合憲章原則。
+- **指導整合**：運行時與代理人指南（如 `AGENT.md`）必須與憲章一致。
+- **持續改進**：憲章每季檢視一次，並以實務檢討結果調整。
+- **複雜度證明**：任何偏離或增加複雜度之決定必須有文件記錄與合理性說明。
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-13 | **Last Amended**: 2025-11-13
+**版本**：1.0.1 | **Ratified**：2025-11-13 | **Last Amended**：2025-11-13
