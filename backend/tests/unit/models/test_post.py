@@ -1,7 +1,7 @@
 """
 Unit tests for Post model
 """
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 import pytest
 from pydantic import ValidationError
@@ -17,7 +17,7 @@ class TestPostModel:
         post = Post(
             platform=Platform.FACEBOOK,
             post_url="https://www.facebook.com/example/posts/123456789",
-            post_time=datetime(2025, 11, 13, 14, 30, 52, tzinfo=UTC),
+            post_time=datetime(2025, 11, 13, 14, 30, 52, tzinfo=timezone.utc),
             post_content="這是一則範例貼文內容",
             likes_count=128,
             comments_count=45,
@@ -33,7 +33,7 @@ class TestPostModel:
         post = Post(
             platform=Platform.INSTAGRAM,
             post_url="https://www.instagram.com/p/ABC123/",
-            post_time=datetime(2025, 11, 13, 14, 30, 52, tzinfo=UTC),
+            post_time=datetime(2025, 11, 13, 14, 30, 52, tzinfo=timezone.utc),
             post_content="IG post content",
             likes_count=256,
             comments_count=89,
@@ -48,7 +48,7 @@ class TestPostModel:
             Post(
                 platform=Platform.FACEBOOK,
                 post_url="https://www.facebook.com/example/posts/123",
-                post_time=datetime.now(UTC),
+                post_time=datetime.now(timezone.utc),
                 post_content="Test",
                 likes_count=-1,
                 comments_count=0,
@@ -62,7 +62,7 @@ class TestPostModel:
             Post(
                 platform=Platform.FACEBOOK,
                 post_url="https://www.facebook.com/example/posts/123",
-                post_time=datetime.now(UTC),
+                post_time=datetime.now(timezone.utc),
                 post_content="Test",
                 likes_count=0,
                 comments_count=-1,
@@ -78,7 +78,7 @@ class TestPostModel:
             Post(
                 platform=Platform.FACEBOOK,
                 post_url="https://www.facebook.com/example/posts/123",
-                post_time=datetime.now(UTC),
+                post_time=datetime.now(timezone.utc),
                 post_content=long_content,
                 likes_count=0,
                 comments_count=0,
@@ -92,7 +92,7 @@ class TestPostModel:
             Post(
                 platform=Platform.FACEBOOK,
                 post_url="https://www.instagram.com/p/ABC123/",  # Mismatch!
-                post_time=datetime.now(UTC),
+                post_time=datetime.now(timezone.utc),
                 post_content="Test",
                 likes_count=0,
                 comments_count=0,

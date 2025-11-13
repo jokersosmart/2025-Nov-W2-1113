@@ -1,7 +1,7 @@
 """
 Unit tests for Comment model
 """
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 
 import pytest
@@ -18,7 +18,7 @@ class TestCommentModel:
         comment = Comment(
             comment_id=str(uuid4()),
             post_url="https://www.facebook.com/example/posts/123456789",
-            comment_time=datetime.now(UTC),
+            comment_time=datetime.now(timezone.utc),
             commenter_id="John Doe (12345678)",
             comment_content="This is a great post!",
         )
@@ -37,7 +37,7 @@ class TestCommentModel:
         comment = Comment(
             comment_id=str(uuid4()),
             post_url="https://www.instagram.com/p/ABC123/",
-            comment_time=datetime.now(UTC),
+            comment_time=datetime.now(timezone.utc),
             commenter_id="@jane_doe (87654321)",
             comment_content="Nice picture!",
             reply_window="Customer Service A",
@@ -56,7 +56,7 @@ class TestCommentModel:
             Comment(
                 comment_id=str(uuid4()),
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="x" * 5001,  # Exceeds 5000 char limit
             )
@@ -69,7 +69,7 @@ class TestCommentModel:
             Comment(
                 comment_id=str(uuid4()),
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="Test content",
                 reply_window="x" * 101,  # Exceeds 100 char limit
@@ -83,7 +83,7 @@ class TestCommentModel:
             Comment(
                 comment_id=str(uuid4()),
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="Test content",
                 reply_content="x" * 1001,  # Exceeds 1000 char limit
@@ -97,7 +97,7 @@ class TestCommentModel:
             Comment(
                 comment_id=str(uuid4()),
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="Test content",
                 customer_notes="x" * 501,  # Exceeds 500 char limit
@@ -111,7 +111,7 @@ class TestCommentModel:
             Comment(
                 comment_id=str(uuid4()),
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="Test content",
                 generated_reply="x" * 1001,  # Exceeds 1000 char limit
@@ -140,7 +140,7 @@ class TestCommentModel:
             Comment(
                 comment_id="not-a-valid-uuid",
                 post_url="https://www.facebook.com/example/posts/123",
-                comment_time=datetime.now(UTC),
+                comment_time=datetime.now(timezone.utc),
                 commenter_id="Test User (111)",
                 comment_content="Test content",
             )
