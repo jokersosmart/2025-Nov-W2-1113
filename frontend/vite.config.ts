@@ -12,11 +12,27 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    open: false,
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
+  preview: {
+    port: 4173,
   },
 })
