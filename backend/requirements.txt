@@ -1,0 +1,38 @@
+# Backend Dependencies - Python 3.11+
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic>=2.5.0  # Updated to use latest compatible version
+pydantic-settings==2.1.0
+
+# Web Scraping
+playwright>=1.40.0  # Use latest prebuilt version
+beautifulsoup4==4.12.2
+lxml>=4.9.0; platform_system=='Linux'  # Unix only, use html.parser on Windows
+lxml-html-clean>=0.2.0; platform_system=='Windows'  # Windows alternative
+
+# Excel Generation
+openpyxl==3.1.2
+
+# HTTP Client
+httpx==0.25.2
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-watch==4.2.0
+# pact-python==2.2.0  # Contract testing (requires C++ Build Tools - install manually if needed)
+
+# Code Quality
+ruff==0.1.6
+black==23.11.0
+mypy==1.7.1
+
+# Performance Profiling (optional - install manually if needed)
+# py-spy==0.3.14  # Requires C++ Build Tools
+# locust==2.17.0  # Load testing - requires C++ Build Tools
+
+# Development
+python-dotenv==1.0.0
