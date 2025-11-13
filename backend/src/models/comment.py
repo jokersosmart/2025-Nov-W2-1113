@@ -39,7 +39,7 @@ class Comment(BaseModel):
         }
     )
 
-    comment_id: UUID = Field(
+    comment_id: str | UUID = Field(
         ...,
         description="Unique identifier for the comment (UUID v4)",
     )
@@ -82,6 +82,17 @@ class Comment(BaseModel):
         max_length=1000,
         description="AI-generated reply placeholder (future feature)",
     )
+
+    @field_validator("comment_id")
+    @classmethod
+    def validate_uuid_format(cls, v: str | UUID) -> str | UUID:
+        """Validate that comment_id is a valid UUID format"""
+        if isinstance(v, str):
+            try:
+                UUID(v)
+            except ValueError as e:
+                raise ValueError("comment_id must be a valid UUID format") from e
+        return v
 
     @field_validator("reply_window", "reply_content", "customer_notes", "generated_reply")
     @classmethod
