@@ -1,6 +1,7 @@
 /**
  * Sanity test to verify frontend test infrastructure
  */
+import * as React from 'react'
 
 describe('Sanity Tests', () => {
   it('should have Node.js 18+', () => {
@@ -10,7 +11,6 @@ describe('Sanity Tests', () => {
   })
 
   it('should import React', () => {
-    const React = require('react')
     expect(React).toBeDefined()
   })
 

@@ -19,6 +19,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     
     /* Path mapping */
     "baseUrl": ".",
@@ -27,7 +29,7 @@
     },
 
     /* Types */
-    "types": ["vite/client"]
+    "types": ["vite/client", "node", "jest"]
   },
   "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"],
