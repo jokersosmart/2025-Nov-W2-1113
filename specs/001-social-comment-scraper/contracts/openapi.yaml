@@ -1,0 +1,607 @@
+openapi: 3.0.3
+info:
+  title: 社群媒體留言爬蟲 API
+  description: 用於抓取 Facebook 和 Instagram 貼文留言的 Web API
+  version: 1.0.0
+  contact:
+    name: API Support
+
+servers:
+  - url: http://localhost:8000
+    description: 本地開發伺服器
+  - url: https://api.example.com
+    description: 生產環境伺服器
+
+tags:
+  - name: scraping
+    description: 留言爬取操作
+  - name: export
+    description: 資料匯出功能
+
+paths:
+  /api/scrape:
+    post:
+      tags:
+        - scraping
+      summary: 開始爬取貼文留言
+      description: 根據提供的貼文 URL 開始爬取留言資料
+      operationId: startScraping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScrapeRequest'
+            examples:
+              facebook:
+                summary: Facebook 貼文
+                value:
+                  post_url: "https://www.facebook.com/example/posts/123456789"
+                  platform: "facebook"
+              instagram:
+                summary: Instagram 貼文
+                value:
+                  post_url: "https://www.instagram.com/p/ABC123xyz/"
+                  platform: "instagram"
+      responses:
+        '200':
+          description: 爬取作業已成功啟動
+          headers:
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              description: 剩餘的請求次數
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScrapeStartResponse'
+              example:
+                scraping_id: "scr_1a2b3c4d5e6f"
+                post:
+                  platform: "facebook"
+                  post_url: "https://www.facebook.com/example/posts/123456789"
+                  post_time: "2025-11-14T10:30:00+08:00"
+                  post_content: "這是一則範例貼文內容"
+                  likes_count: 1250
+                  comments_count: 89
+                status: "in_progress"
+        '400':
+          description: 無效的請求參數
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_url:
+                  summary: 無效的 URL 格式
+                  value:
+                    error: "Invalid URL format"
+                    details: "提供的 URL 格式不正確,請確認是否為有效的 Facebook 或 Instagram 貼文連結"
+                invalid_platform:
+                  summary: 不支援的平台
+                  value:
+                    error: "Invalid platform"
+                    details: "平台參數必須是 'facebook' 或 'instagram'"
+        '404':
+          description: 找不到指定的貼文
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Post not found"
+                details: "無法存取此貼文,可能已被刪除或設為私人"
+        '429':
+          description: 請求次數超過限制
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: 建議重試的等待秒數
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              description: 剩餘的請求次數(此時為 0)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Rate limit exceeded"
+                details: "請求次數過多,請稍後再試"
+        '500':
+          description: 伺服器內部錯誤或網路問題
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                network_error:
+                  summary: 網路連線問題
+                  value:
+                    error: "Network error"
+                    details: "無法連線至社群平台,請檢查網路連線或稍後再試"
+                server_error:
+                  summary: 伺服器錯誤
+                  value:
+                    error: "Internal server error"
+                    details: "伺服器發生錯誤,請稍後再試"
+
+  /api/scrape/{scraping_id}/progress:
+    get:
+      tags:
+        - scraping
+      summary: 查詢爬取進度
+      description: 取得指定爬取作業的當前進度和已抓取的留言資料
+      operationId: getScrapingProgress
+      parameters:
+        - name: scraping_id
+          in: path
+          required: true
+          description: 爬取作業的唯一識別碼
+          schema:
+            type: string
+          example: "scr_1a2b3c4d5e6f"
+      responses:
+        '200':
+          description: 成功取得進度資訊
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScrapeProgressResponse'
+              examples:
+                in_progress:
+                  summary: 爬取進行中
+                  value:
+                    scraping_id: "scr_1a2b3c4d5e6f"
+                    status: "in_progress"
+                    progress:
+                      current: 45
+                      total: 89
+                    comments:
+                      - comment_id: "comment_001"
+                        post_url: "https://www.facebook.com/example/posts/123456789"
+                        comment_time: "2025-11-14T11:00:00+08:00"
+                        commenter_id: "user_abc123"
+                        comment_content: "這個產品真的很棒!"
+                        reply_window: ""
+                        reply_content: ""
+                        customer_notes: ""
+                        generated_reply: ""
+                      - comment_id: "comment_002"
+                        post_url: "https://www.facebook.com/example/posts/123456789"
+                        comment_time: "2025-11-14T11:05:00+08:00"
+                        commenter_id: "user_xyz789"
+                        comment_content: "請問什麼時候會到貨?"
+                        reply_window: ""
+                        reply_content: ""
+                        customer_notes: ""
+                        generated_reply: ""
+                completed:
+                  summary: 爬取已完成
+                  value:
+                    scraping_id: "scr_1a2b3c4d5e6f"
+                    status: "completed"
+                    progress:
+                      current: 89
+                      total: 89
+                    comments:
+                      - comment_id: "comment_001"
+                        post_url: "https://www.facebook.com/example/posts/123456789"
+                        comment_time: "2025-11-14T11:00:00+08:00"
+                        commenter_id: "user_abc123"
+                        comment_content: "這個產品真的很棒!"
+                        reply_window: ""
+                        reply_content: ""
+                        customer_notes: ""
+                        generated_reply: ""
+                cancelled:
+                  summary: 爬取已取消
+                  value:
+                    scraping_id: "scr_1a2b3c4d5e6f"
+                    status: "cancelled"
+                    progress:
+                      current: 45
+                      total: 89
+                    comments:
+                      - comment_id: "comment_001"
+                        post_url: "https://www.facebook.com/example/posts/123456789"
+                        comment_time: "2025-11-14T11:00:00+08:00"
+                        commenter_id: "user_abc123"
+                        comment_content: "這個產品真的很棒!"
+                        reply_window: ""
+                        reply_content: ""
+                        customer_notes: ""
+                        generated_reply: ""
+        '404':
+          description: 找不到指定的爬取作業
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Scraping job not found"
+                details: "找不到此爬取作業,可能已過期或不存在"
+
+  /api/scrape/{scraping_id}/cancel:
+    post:
+      tags:
+        - scraping
+      summary: 取消爬取作業
+      description: 取消正在進行中的爬取作業,並保留已抓取的部分資料
+      operationId: cancelScraping
+      parameters:
+        - name: scraping_id
+          in: path
+          required: true
+          description: 爬取作業的唯一識別碼
+          schema:
+            type: string
+          example: "scr_1a2b3c4d5e6f"
+      responses:
+        '200':
+          description: 成功取消爬取作業
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelScrapeResponse'
+              example:
+                scraping_id: "scr_1a2b3c4d5e6f"
+                status: "cancelled"
+                comments:
+                  - comment_id: "comment_001"
+                    post_url: "https://www.facebook.com/example/posts/123456789"
+                    comment_time: "2025-11-14T11:00:00+08:00"
+                    commenter_id: "user_abc123"
+                    comment_content: "這個產品真的很棒!"
+                    reply_window: ""
+                    reply_content: ""
+                    customer_notes: ""
+                    generated_reply: ""
+                  - comment_id: "comment_002"
+                    post_url: "https://www.facebook.com/example/posts/123456789"
+                    comment_time: "2025-11-14T11:05:00+08:00"
+                    commenter_id: "user_xyz789"
+                    comment_content: "請問什麼時候會到貨?"
+                    reply_window: ""
+                    reply_content: ""
+                    customer_notes: ""
+                    generated_reply: ""
+                message: "已取消,保留 2 則留言資料"
+        '404':
+          description: 找不到指定的爬取作業
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Scraping job not found"
+                details: "找不到此爬取作業,可能已過期或不存在"
+        '409':
+          description: 作業狀態衝突
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid state"
+                details: "此爬取作業已完成或已取消,無法再次取消"
+
+  /api/export:
+    post:
+      tags:
+        - export
+      summary: 匯出 Excel 檔案
+      description: 將貼文和留言資料匯出為 Excel 格式檔案
+      operationId: exportToExcel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+            example:
+              post:
+                platform: "facebook"
+                post_url: "https://www.facebook.com/example/posts/123456789"
+                post_time: "2025-11-14T10:30:00+08:00"
+                post_content: "這是一則範例貼文內容"
+                likes_count: 1250
+                comments_count: 89
+              comments:
+                - comment_id: "comment_001"
+                  post_url: "https://www.facebook.com/example/posts/123456789"
+                  comment_time: "2025-11-14T11:00:00+08:00"
+                  commenter_id: "user_abc123"
+                  comment_content: "這個產品真的很棒!"
+                  reply_window: ""
+                  reply_content: ""
+                  customer_notes: ""
+                  generated_reply: ""
+                - comment_id: "comment_002"
+                  post_url: "https://www.facebook.com/example/posts/123456789"
+                  comment_time: "2025-11-14T11:05:00+08:00"
+                  commenter_id: "user_xyz789"
+                  comment_content: "請問什麼時候會到貨?"
+                  reply_window: ""
+                  reply_content: ""
+                  customer_notes: ""
+                  generated_reply: ""
+      responses:
+        '200':
+          description: 成功生成 Excel 檔案
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              description: 檔案下載標頭
+              example: "attachment; filename=facebook_comments_20251114_143000.xlsx"
+            Content-Type:
+              schema:
+                type: string
+              description: 檔案 MIME 類型
+              example: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: 無效的請求資料
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid export data"
+                details: "匯出資料格式不正確,請確認貼文和留言資料完整"
+        '500':
+          description: 檔案生成失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Export failed"
+                details: "Excel 檔案生成失敗,請稍後再試"
+
+components:
+  schemas:
+    ScrapeRequest:
+      type: object
+      required:
+        - post_url
+        - platform
+      properties:
+        post_url:
+          type: string
+          format: uri
+          description: 貼文的完整 URL
+          example: "https://www.facebook.com/example/posts/123456789"
+        platform:
+          type: string
+          enum:
+            - facebook
+            - instagram
+          description: 社群平台類型
+          example: "facebook"
+
+    Post:
+      type: object
+      required:
+        - platform
+        - post_url
+        - post_time
+        - post_content
+        - likes_count
+        - comments_count
+      properties:
+        platform:
+          type: string
+          enum:
+            - facebook
+            - instagram
+          description: 社群平台
+          example: "facebook"
+        post_url:
+          type: string
+          format: uri
+          description: 貼文 URL
+          example: "https://www.facebook.com/example/posts/123456789"
+        post_time:
+          type: string
+          format: date-time
+          description: 貼文發布時間 (ISO 8601 格式)
+          example: "2025-11-14T10:30:00+08:00"
+        post_content:
+          type: string
+          description: 貼文內容
+          example: "這是一則範例貼文內容"
+        likes_count:
+          type: integer
+          minimum: 0
+          description: 按讚數
+          example: 1250
+        comments_count:
+          type: integer
+          minimum: 0
+          description: 留言總數
+          example: 89
+
+    Comment:
+      type: object
+      required:
+        - comment_id
+        - post_url
+        - comment_time
+        - commenter_id
+        - comment_content
+        - reply_window
+        - reply_content
+        - customer_notes
+        - generated_reply
+      properties:
+        comment_id:
+          type: string
+          description: 留言唯一識別碼
+          example: "comment_001"
+        post_url:
+          type: string
+          format: uri
+          description: 所屬貼文的 URL
+          example: "https://www.facebook.com/example/posts/123456789"
+        comment_time:
+          type: string
+          format: date-time
+          description: 留言時間 (ISO 8601 格式)
+          example: "2025-11-14T11:00:00+08:00"
+        commenter_id:
+          type: string
+          description: 留言者識別碼
+          example: "user_abc123"
+        comment_content:
+          type: string
+          description: 留言內容
+          example: "這個產品真的很棒!"
+        reply_window:
+          type: string
+          description: 回覆視窗 (預設為空字串)
+          example: ""
+        reply_content:
+          type: string
+          description: 回覆內容 (預設為空字串)
+          example: ""
+        customer_notes:
+          type: string
+          description: 客服備註 (預設為空字串)
+          example: ""
+        generated_reply:
+          type: string
+          description: AI 生成的回覆 (預設為空字串)
+          example: ""
+
+    ScrapeStartResponse:
+      type: object
+      required:
+        - scraping_id
+        - post
+        - status
+      properties:
+        scraping_id:
+          type: string
+          description: 爬取作業的唯一識別碼
+          example: "scr_1a2b3c4d5e6f"
+        post:
+          $ref: '#/components/schemas/Post'
+        status:
+          type: string
+          enum:
+            - in_progress
+          description: 作業狀態
+          example: "in_progress"
+
+    Progress:
+      type: object
+      required:
+        - current
+        - total
+      properties:
+        current:
+          type: integer
+          minimum: 0
+          description: 目前已處理的留言數量
+          example: 45
+        total:
+          type: integer
+          minimum: 0
+          description: 總留言數量
+          example: 89
+
+    ScrapeProgressResponse:
+      type: object
+      required:
+        - scraping_id
+        - status
+        - progress
+        - comments
+      properties:
+        scraping_id:
+          type: string
+          description: 爬取作業的唯一識別碼
+          example: "scr_1a2b3c4d5e6f"
+        status:
+          type: string
+          enum:
+            - in_progress
+            - completed
+            - cancelled
+          description: 作業狀態
+          example: "in_progress"
+        progress:
+          $ref: '#/components/schemas/Progress'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          description: 已抓取的留言列表
+
+    CancelScrapeResponse:
+      type: object
+      required:
+        - scraping_id
+        - status
+        - comments
+        - message
+      properties:
+        scraping_id:
+          type: string
+          description: 爬取作業的唯一識別碼
+          example: "scr_1a2b3c4d5e6f"
+        status:
+          type: string
+          enum:
+            - cancelled
+          description: 作業狀態
+          example: "cancelled"
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          description: 已保留的部分留言資料
+        message:
+          type: string
+          description: 取消作業的訊息
+          example: "已取消,保留 45 則留言資料"
+
+    ExportRequest:
+      type: object
+      required:
+        - post
+        - comments
+      properties:
+        post:
+          $ref: '#/components/schemas/Post'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          description: 要匯出的留言列表
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - details
+      properties:
+        error:
+          type: string
+          description: 錯誤類型
+          example: "Invalid URL format"
+        details:
+          type: string
+          description: 詳細的錯誤訊息
+          example: "提供的 URL 格式不正確,請確認是否為有效的 Facebook 或 Instagram 貼文連結"
+
+  securitySchemes: {}
+
+security: []
