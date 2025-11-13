@@ -44,14 +44,14 @@ Phase 6 (Polish & 跨功能) ←──────┘
 
 ### 任務清單 - 設置
 
-- [ ] T001 建立專案目錄結構 backend/{src,tests}/ 與 frontend/{src,tests}/
-- [ ] T002 [P] 配置後端環境 requirements.txt 與 Python 3.11+ venv
-- [ ] T003 [P] 配置前端環境 package.json 與 Node.js 18+
-- [ ] T004 [P] 安裝 Playwright 瀏覽器 (chromium, firefox) 於後端
-- [ ] T005 [P] 配置程式碼品質工具 (Ruff, Black, ESLint, Prettier)
-- [ ] T006 設置 GitHub Actions CI workflow (.github/workflows/ci.yml)
-- [ ] T007 配置 pre-commit hooks (測試與格式化)
-- [ ] T008 驗證 CI 管道通過 (後端與前端測試執行成功)
+- [x] T001 建立專案目錄結構 backend/{src,tests}/ 與 frontend/{src,tests}/
+- [x] T002 [P] 配置後端環境 requirements.txt 與 Python 3.11+ venv
+- [x] T003 [P] 配置前端環境 package.json 與 Node.js 18+
+- [x] T004 [P] 安裝 Playwright 瀏覽器 (chromium, firefox) 於後端
+- [x] T005 [P] 配置程式碼品質工具 (Ruff, Black, ESLint, Prettier)
+- [x] T006 設置 GitHub Actions CI workflow (.github/workflows/ci.yml)
+- [x] T007 配置 pre-commit hooks (測試與格式化)
+- [x] T008 驗證 CI 管道通過 (後端與前端測試執行成功)
 
 **並行執行範例**:
 
@@ -74,15 +74,15 @@ Terminal 4: cd backend; pip install ruff black; cd ../frontend; npm install --sa
 
 ### 任務清單 - 基礎元件
 
-- [ ] T009 [P] 定義 Post Pydantic 模型於 backend/src/models/post.py
-- [ ] T010 [P] 定義 Comment Pydantic 模型於 backend/src/models/comment.py
-- [ ] T011 [P] 定義 TypeScript Post interface 於 frontend/src/types/post.ts
-- [ ] T012 [P] 定義 TypeScript Comment interface 於 frontend/src/types/comment.ts
-- [ ] T013 實作速率限制服務 backend/src/services/rate_limiter.py
-- [ ] T014 實作重試邏輯服務 backend/src/services/retry_handler.py
-- [ ] T015 實作 URL 驗證工具 backend/src/utils/url_validator.py
-- [ ] T016 [P] 建立 FastAPI 應用程式於 backend/main.py 與錯誤處理中介軟體
-- [ ] T017 [P] 建立 Zustand store 於 frontend/src/services/store.ts
+- [x] T009 [P] 定義 Post Pydantic 模型於 backend/src/models/post.py
+- [x] T010 [P] 定義 Comment Pydantic 模型於 backend/src/models/comment.py
+- [x] T011 [P] 定義 TypeScript Post interface 於 frontend/src/types/post.ts
+- [x] T012 [P] 定義 TypeScript Comment interface 於 frontend/src/types/comment.ts
+- [x] T013 實作速率限制服務 backend/src/services/rate_limiter.py
+- [x] T014 實作重試邏輯服務 backend/src/services/retry_handler.py
+- [x] T015 實作 URL 驗證工具 backend/src/utils/url_validator.py
+- [x] T016 [P] 建立 FastAPI 應用程式於 backend/main.py 與錯誤處理中介軟體
+- [x] T017 [P] 建立 Zustand store 於 frontend/src/services/store.ts
 
 **並行執行範例**:
 
