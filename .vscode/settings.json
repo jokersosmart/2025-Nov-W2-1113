@@ -17,9 +17,13 @@
         "${workspaceFolder}/backend"
     ],
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.typeCheckingMode": "off",
     "python.analysis.diagnosticSeverityOverrides": {
-        "reportMissingImports": "warning"
+        "reportMissingImports": "warning",
+        "reportGeneralTypeIssues": "none",
+        "reportOptionalMemberAccess": "none",
+        "reportOptionalSubscript": "none",
+        "reportPrivateImportUsage": "none"
     },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
@@ -28,6 +32,8 @@
             "source.organizeImports": "explicit"
         }
     },
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
 }
 
