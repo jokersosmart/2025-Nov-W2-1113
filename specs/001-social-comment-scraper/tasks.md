@@ -123,18 +123,18 @@ Terminal 2: # T017 Zustand store
 - [x] T021 [US1] 實作 Facebook 爬蟲服務 backend/src/services/facebook_scraper.py
 - [x] T022 [US1] 實作 Instagram 爬蟲服務 backend/src/services/instagram_scraper.py
 - [x] T023 [US1] 實作分批處理服務 backend/src/services/batch_processor.py
-- [ ] T024 [US1] 實作 POST /api/scrape 端點於 backend/src/api/scrape.py
-- [ ] T025 [US1] 實作 GET /api/scrape/{id}/progress 端點於 backend/src/api/scrape.py
-- [ ] T026 [US1] 實作 POST /api/scrape/{id}/cancel 端點於 backend/src/api/scrape.py
+- [x] T024 [US1] 實作 POST /api/scrape 端點於 backend/src/api/scrape.py
+- [x] T025 [US1] 實作 GET /api/scrape/{id}/progress 端點於 backend/src/api/scrape.py
+- [x] T026 [US1] 實作 POST /api/scrape/{id}/cancel 端點於 backend/src/api/scrape.py
 
 ### 任務清單 - US1 前端
 
-- [ ] T027 [P] [US1] 實作 URL 輸入元件 frontend/src/components/UrlInput.tsx
-- [ ] T028 [P] [US1] 實作爬取按鈕元件 frontend/src/components/ScrapeButton.tsx
-- [ ] T029 [P] [US1] 實作進度指示器元件 frontend/src/components/ProgressIndicator.tsx
-- [ ] T030 [P] [US1] 實作留言表格元件 frontend/src/components/CommentTable.tsx
-- [ ] T031 [P] [US1] 實作錯誤訊息元件 frontend/src/components/ErrorMessage.tsx
-- [ ] T032 [US1] 實作 API 服務 frontend/src/services/apiService.ts
+- [x] T027 [P] [US1] 實作 URL 輸入元件 frontend/src/components/UrlInput.tsx
+- [x] T028 [P] [US1] 實作爬取按鈕元件 frontend/src/components/ScrapeButton.tsx
+- [x] T029 [P] [US1] 實作進度指示器元件 frontend/src/components/ProgressIndicator.tsx
+- [x] T030 [P] [US1] 實作留言表格元件 frontend/src/components/CommentTable.tsx
+- [x] T031 [P] [US1] 實作錯誤訊息元件 frontend/src/components/ErrorMessage.tsx
+- [x] T032 [US1] 實作 API 服務 frontend/src/services/apiService.ts
 - [ ] T033 [US1] 實作主頁面 frontend/src/pages/HomePage.tsx
 - [ ] T034 [US1] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_scraping_flow.test.ts
 
