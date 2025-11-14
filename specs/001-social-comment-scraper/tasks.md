@@ -120,9 +120,9 @@ Terminal 2: # T017 Zustand store
 - [x] T018 [P] [US1] 撰寫契約測試 POST /api/scrape 於 backend/tests/contract/test_scrape_contract.py
 - [x] T019 [P] [US1] 撰寫契約測試 GET /api/scrape/{id}/progress 於 backend/tests/contract/test_progress_contract.py
 - [x] T020 [P] [US1] 撰寫契約測試 POST /api/scrape/{id}/cancel 於 backend/tests/contract/test_cancel_contract.py
-- [ ] T021 [US1] 實作 Facebook 爬蟲服務 backend/src/services/facebook_scraper.py
-- [ ] T022 [US1] 實作 Instagram 爬蟲服務 backend/src/services/instagram_scraper.py
-- [ ] T023 [US1] 實作分批處理服務 backend/src/services/batch_processor.py
+- [x] T021 [US1] 實作 Facebook 爬蟲服務 backend/src/services/facebook_scraper.py
+- [x] T022 [US1] 實作 Instagram 爬蟲服務 backend/src/services/instagram_scraper.py
+- [x] T023 [US1] 實作分批處理服務 backend/src/services/batch_processor.py
 - [ ] T024 [US1] 實作 POST /api/scrape 端點於 backend/src/api/scrape.py
 - [ ] T025 [US1] 實作 GET /api/scrape/{id}/progress 端點於 backend/src/api/scrape.py
 - [ ] T026 [US1] 實作 POST /api/scrape/{id}/cancel 端點於 backend/src/api/scrape.py

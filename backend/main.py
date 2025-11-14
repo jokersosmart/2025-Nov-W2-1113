@@ -114,11 +114,10 @@ async def root() -> dict[str, str]:
     }
 
 
-# API routes will be added here in future tasks
-# Example:
-# from src.api import scrape, export
-# app.include_router(scrape.router, prefix="/api", tags=["Scraping"])
-# app.include_router(export.router, prefix="/api", tags=["Export"])
+# API routes
+from src.api import scrape
+
+app.include_router(scrape.router)
 
 
 if __name__ == "__main__":
