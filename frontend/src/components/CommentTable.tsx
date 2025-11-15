@@ -29,18 +29,7 @@ import {
   SortingState,
   ColumnDef,
 } from '@tanstack/react-table';
-
-export interface Comment {
-  comment_id: string;
-  post_url: string;
-  comment_time: string;
-  commenter_id: string;
-  comment_content: string;
-  reply_window?: string;
-  reply_content?: string;
-  customer_notes?: string;
-  generated_reply?: string;
-}
+import type { Comment } from '../types/comment';
 
 export interface CommentTableProps {
   /** Comments data */
