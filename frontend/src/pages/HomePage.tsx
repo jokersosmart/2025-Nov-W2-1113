@@ -43,6 +43,9 @@ export function HomePage(): JSX.Element {
   // Local state for URL input
   const [url, setUrl] = useState('');
   const [platform, setPlatform] = useState<Platform | null>(null);
+  
+  // Local state for comment selection (US2)
+  const [selectedCommentIds, setSelectedCommentIds] = useState<Set<string>>(new Set());
 
   // Global state from Zustand store
   const {
@@ -52,6 +55,8 @@ export function HomePage(): JSX.Element {
     error,
     setScrapeProgress,
     updateScrapeProgress,
+    updateComment,
+    deleteComments,
     setError,
     reset,
   } = useStore();
@@ -219,6 +224,34 @@ export function HomePage(): JSX.Element {
   }, [setError]);
 
   /**
+   * Handle comment field edit (US2)
+   * FR-010: 使用者必須能編輯表格中的欄位
+   */
+  const handleCommentEdit = useCallback((commentId: string, field: string, value: string) => {
+    updateComment(commentId, { [field]: value });
+  }, [updateComment]);
+
+  /**
+   * Handle comment selection change (US2)
+   */
+  const handleSelectionChange = useCallback((newSelection: Set<string>) => {
+    setSelectedCommentIds(newSelection);
+  }, []);
+
+  /**
+   * Handle delete selected comments (US2)
+   * FR-011: 使用者必須能勾選並刪除不需要的留言資料列
+   */
+  const handleDeleteSelected = useCallback(() => {
+    if (selectedCommentIds.size === 0) return;
+    
+    if (window.confirm(`確定要刪除 ${selectedCommentIds.size} 則留言嗎?此操作無法復原。`)) {
+      deleteComments(Array.from(selectedCommentIds));
+      setSelectedCommentIds(new Set()); // Clear selection
+    }
+  }, [selectedCommentIds, deleteComments]);
+
+  /**
    * Cleanup polling on unmount
    */
   useEffect(() => {
@@ -377,10 +410,47 @@ export function HomePage(): JSX.Element {
       {/* Comments Table */}
       {comments.length > 0 && (
         <section aria-label="留言列表">
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-            留言列表 ({comments.length} 則)
-          </h2>
-          <CommentTable comments={comments} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0 }}>
+              留言列表 ({comments.length} 則)
+            </h2>
+            
+            {/* Delete button (US2) */}
+            {selectedCommentIds.size > 0 && (
+              <button
+                onClick={handleDeleteSelected}
+                style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.375rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = '#b91c1c';
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = '#dc2626';
+                }}
+                aria-label={`刪除 ${selectedCommentIds.size} 則留言`}
+              >
+                🗑️ 刪除選取的留言 ({selectedCommentIds.size})
+              </button>
+            )}
+          </div>
+          
+          <CommentTable 
+            comments={comments}
+            selectable={true}
+            selectedIds={selectedCommentIds}
+            onSelectionChange={handleSelectionChange}
+            editable={true}
+            onEdit={handleCommentEdit}
+          />
         </section>
       )}
 

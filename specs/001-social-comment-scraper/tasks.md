@@ -176,10 +176,10 @@ Terminal 5: # T031 ErrorMessage
 
 ### 任務清單 - US2
 
-- [ ] T035 [P] [US2] 實作可編輯儲存格元件 frontend/src/components/EditableCell.tsx
-- [ ] T036 [P] [US2] 擴充 CommentTable 支援勾選與刪除 frontend/src/components/CommentTable.tsx
-- [ ] T037 [US2] 擴充 Zustand store 支援編輯與刪除操作 frontend/src/services/store.ts
-- [ ] T038 [US2] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_editing_flow.test.ts
+- [x] T035 [P] [US2] 實作可編輯儲存格元件 frontend/src/components/EditableCell.tsx
+- [x] T036 [P] [US2] 擴充 CommentTable 支援勾選與刪除 frontend/src/components/CommentTable.tsx
+- [x] T037 [US2] 擴充 Zustand store 支援編輯與刪除操作 frontend/src/services/store.ts
+- [x] T038 [US2] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_editing_flow.test.ts
 
 **並行執行範例**:
 
