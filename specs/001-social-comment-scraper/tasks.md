@@ -136,7 +136,7 @@ Terminal 2: # T017 Zustand store
 - [x] T031 [P] [US1] 實作錯誤訊息元件 frontend/src/components/ErrorMessage.tsx
 - [x] T032 [US1] 實作 API 服務 frontend/src/services/apiService.ts
 - [x] T033 [US1] 實作主頁面 frontend/src/pages/HomePage.tsx
-- [ ] T034 [US1] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_scraping_flow.test.ts
+- [x] T034 [US1] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_scraping_flow.test.tsx
 
 **並行執行範例**:
 

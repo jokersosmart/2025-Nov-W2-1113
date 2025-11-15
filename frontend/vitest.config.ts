@@ -7,11 +7,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: [],
-    pool: 'threads',
+    setupFiles: ['./tests/setup.ts'],
+    pool: 'forks',
     poolOptions: {
-      threads: {
-        singleThread: true,
+      forks: {
+        singleFork: true,
       },
     },
     coverage: {
