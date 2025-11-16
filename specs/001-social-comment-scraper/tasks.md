@@ -218,9 +218,9 @@ Terminal 2: # T036 CommentTable extension
 
 ### 任務清單 - US3 前端
 
-- [ ] T042 [P] [US3] 實作匯出按鈕元件 frontend/src/components/ExportButton.tsx
-- [ ] T043 [US3] 擴充 API 服務支援匯出 frontend/src/services/apiService.ts
-- [ ] T044 [US3] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_export_flow.test.ts
+- [x] T042 [P] [US3] 實作匯出按鈕元件 frontend/src/components/ExportButton.tsx
+- [x] T043 [US3] 擴充 API 服務支援匯出 frontend/src/services/apiService.ts
+- [x] T044 [US3] 撰寫 E2E 測試涵蓋 4 個驗收情境於 frontend/tests/integration/test_export_flow.test.ts
 
 **並行執行範例**:
 
@@ -266,11 +266,11 @@ Terminal 2: # T040 Excel generator (後端)
 
 ### 任務清單 - 文件與部署
 
-- [ ] T054 [P] 撰寫使用者操作手冊 docs/user-guide.md
-- [ ] T055 [P] 撰寫 API 文件 (OpenAPI 自動生成 + 補充說明)
-- [ ] T056 [P] 建立 Docker Compose 配置 docker-compose.yml
-- [ ] T057 撰寫部署文件 docs/deploy.md
-- [ ] T058 實作健康檢查端點 GET /health 於 backend/main.py
+- [x] T054 [P] 撰寫使用者操作手冊 docs/user-guide.md
+- [x] T055 [P] 撰寫 API 文件 (OpenAPI 自動生成 + 補充說明)
+- [x] T056 [P] 建立 Docker Compose 配置 docker-compose.yml
+- [x] T057 撰寫部署文件 docs/deploy.md
+- [x] T058 實作健康檢查端點 GET /health 於 backend/main.py
 - [ ] T059 執行最終憲章合規檢查 (代碼品質、測試、UX、效能)
 - [ ] T060 驗證所有 27 個功能需求 (FR-001 to FR-027) 已實作
 - [ ] T061 驗證所有 11 個成功標準 (SC-001 to SC-011) 已達成
