@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -55,6 +56,47 @@ app.add_middleware(
 
 
 # Error handling middleware
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
+    """將 Pydantic 驗證錯誤統一返回 400 而非 422"""
+    errors = exc.errors()
+    # 提取第一個錯誤資訊
+    first_error = errors[0] if errors else {}
+    field_name = first_error.get("loc", ["unknown"])[-1]
+    error_type = first_error.get("type", "validation_error")
+
+    # 根據錯誤類型生成友善訊息
+    if "missing" in error_type:
+        message = f"{field_name} is required"
+    else:
+        message = str(first_error.get("msg", "Invalid request data"))
+
+    # 清理 error details,移除不可序列化的物件
+    cleaned_errors = []
+    for error in errors:
+        cleaned_error = {
+            "loc": error.get("loc", []),
+            "msg": error.get("msg", ""),
+            "type": error.get("type", ""),
+        }
+        # 只在 input 可序列化時才加入
+        input_value = error.get("input")
+        if input_value is not None and not isinstance(input_value, bytes):
+            cleaned_error["input"] = input_value
+        cleaned_errors.append(cleaned_error)
+
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={
+            "error": "Validation error",
+            "message": message,
+            "details": cleaned_errors,
+        },
+    )
+
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """Global exception handler for unhandled errors"""

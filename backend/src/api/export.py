@@ -13,7 +13,7 @@ Date: 2025-11-16
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, status
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 from typing import List
 
 from ..models.post import Post, Platform

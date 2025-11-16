@@ -78,9 +78,9 @@ class TestExportContract:
     def test_export_requires_post_data(self, client: TestClient) -> None:
         """Test that post data is required in request body"""
         response = client.post("/api/export", json={"comments": []})
-        assert response.status_code in [400, 422]  # Accept both for Pydantic validation
+        assert response.status_code == 400
         data = response.json()
-        assert "post" in str(data).lower() or "detail" in data
+        assert "post" in str(data).lower() or "error" in data
 
     def test_export_requires_comments_data(self, client: TestClient) -> None:
         """Test that comments data is required in request body"""
@@ -97,18 +97,18 @@ class TestExportContract:
                 }
             }
         )
-        assert response.status_code in [400, 422]  # Accept both for Pydantic validation
+        assert response.status_code == 400
         data = response.json()
-        assert "comments" in str(data).lower() or "detail" in data
+        assert "comments" in str(data).lower() or "error" in data
 
     def test_export_validates_platform(self, client: TestClient, sample_export_data: dict) -> None:
         """Test that invalid platform is rejected"""
         invalid_data = sample_export_data.copy()
         invalid_data["post"]["platform"] = "twitter"
         response = client.post("/api/export", json=invalid_data)
-        assert response.status_code in [400, 422]  # Accept both for Pydantic validation
+        assert response.status_code == 400
         data = response.json()
-        assert "platform" in str(data).lower() or "detail" in data
+        assert "platform" in str(data).lower() or "error" in data
 
     def test_export_returns_excel_file(self, client: TestClient, sample_export_data: dict) -> None:
         """Test that response is an Excel file"""
