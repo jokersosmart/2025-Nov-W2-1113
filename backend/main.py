@@ -115,9 +115,10 @@ async def root() -> dict[str, str]:
 
 
 # API routes
-from src.api import scrape
+from src.api import scrape, export
 
 app.include_router(scrape.router)
+app.include_router(export.router)
 
 
 if __name__ == "__main__":

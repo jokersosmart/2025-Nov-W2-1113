@@ -214,7 +214,7 @@ Terminal 2: # T036 CommentTable extension
 
 - [x] T039 [US3] 撰寫契約測試 POST /api/export 於 backend/tests/contract/test_export_contract.py
 - [x] T040 [US3] 實作 Excel 生成服務 backend/src/services/excel_generator.py
-- [ ] T041 [US3] 實作 POST /api/export 端點於 backend/src/api/export.py
+- [x] T041 [US3] 實作 POST /api/export 端點於 backend/src/api/export.py
 
 ### 任務清單 - US3 前端
 
