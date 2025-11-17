@@ -253,7 +253,7 @@ Terminal 2: # T040 Excel generator (後端)
 
 - [x] T045 [P] 實作統一錯誤處理中介軟體 backend/src/api/middleware/error_handler.py
 - [x] T046 [P] 實作速率限制偵測邏輯 backend/src/services/scrapers (擴充)
-- [ ] T047 [P] 實作網路重試邏輯 backend/src/services/retry_handler.py (擴充)
+- [x] T047 [P] 實作網路重試邏輯 backend/src/services/retry_handler.py (擴充)
 - [ ] T048 撰寫邊界情況整合測試 backend/tests/integration/test_edge_cases.py
 
 ### 任務清單 - 效能與無障礙
