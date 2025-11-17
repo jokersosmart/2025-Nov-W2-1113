@@ -1,0 +1,9 @@
+# 無障礙測試報告目錄
+
+此目錄用於存放手動無障礙測試報告:
+
+- `screen_reader_test_report.md` - T051 螢幕閱讀器測試報告
+- `keyboard_navigation_report.md` - T052 鍵盤導航測試報告
+- `color_contrast_report.md` - T053 色彩對比驗證報告
+
+報告範本請參考 `../README.md`
