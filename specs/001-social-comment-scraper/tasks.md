@@ -258,7 +258,7 @@ Terminal 2: # T040 Excel generator (後端)
 
 ### 任務清單 - 效能與無障礙
 
-- [ ] T049 執行負載測試驗證 API p95 <= 200ms 使用 Locust
+- [x] T049 執行負載測試驗證 API p95 <= 200ms 使用 Locust
 - [ ] T050 執行 Lighthouse 稽核確保前端效能與無障礙性 >= 95 分
 - [ ] T051 [P] 使用 NVDA/VoiceOver 進行螢幕閱讀器測試
 - [ ] T052 [P] 驗證鍵盤導航完整性 (Tab, Enter, Escape)
